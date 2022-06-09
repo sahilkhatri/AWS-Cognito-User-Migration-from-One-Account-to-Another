@@ -1,7 +1,6 @@
 # AWS-Cognito-User-Migration-from-One-Account-to-Another
-This repo guides on the steps to be followed for migrating the Users from userpool in One AWS account to userpool in another AWS account
 
-Cognito User migration from one account to the other without needing users to re-verify
+AWS Cognito User migration from one account to the other without needing users to re-verify
 
 Scenario: 
 We have an existing user pool in Account1 that authorizes the users for accessing a web application. Due to some circumstances, we are required to migrate our workload to another account i.e. Account2. Due to this, we are required to set up a workflow that migrates the user pool from the old account (Account1) to the new one (Account2). We also need to do it in such a way that it does not require the users to again verify themselves. 
@@ -16,14 +15,14 @@ Let’s assume that we already have the user pool set up in the old and new acco
 
 This Trust relationship will let the lambda function (which is in another account) Assume this role and perform the necessary steps.
 
-2.	Create the lambda function test-migration-cognito in Account2. The nodejs code for this function can be found at https://github.com/sahilkhatri/AWS-Cognito-User-Migration-from-One-Account-to-Another.
+2.	Create the lambda function test-migration-cognito in Account2. The nodejs code for this function can be found in this repo.
 
 Configure the following Environment Variables for the lambda function:
-OLD_CLIENT_ID 	(AppClient id)
-OLD_EXTERNAL_ID 	(External id mentioned in the cognito-access-role in account 1)
-OLD_ROLE_ARN	(Arn of the cognito-access-role role)
-OLD_USER_POOL_ID 	(Pool id of the userpool)
-OLD_USER_POOL_REGION	(Region of the userpool)
+- OLD_CLIENT_ID 	(AppClient id)
+- OLD_EXTERNAL_ID 	(External id mentioned in the cognito-access-role in account 1)
+- OLD_ROLE_ARN	(Arn of the cognito-access-role role)
+- OLD_USER_POOL_ID 	(Pool id of the userpool)
+- OLD_USER_POOL_REGION	(Region of the userpool)
 
 3.	In Account2 create a policy “cognito-migration-lambda-policy” which allows the cognito-idp:AdminInitiateAuth, cognito-idp:AdminGetUser, and sts:AssumeRole actions on the Userpool and cognito-access-role that we created previously in the Account1. 
 
